@@ -19,22 +19,23 @@ rs = []
 saved_data = []
 
 # Crawl
-for i in range(100):
-	response = requests.request("POST", url + str(i), headers=headers)
-	content = response.json()
-	for home in content.get("estate_list", False):
-	    if home.get("code", False):
-	        if home.get("code", False) not in saved_data:
-	            saved_data.append(home.get("code", False))
-	            rs.append({
-					"floorArea": str(home.get("foundation", False)),
-					"sector": str(home.get("some_address", False)),
-					"url": "https://www.melkana.com/estate/" + str(home.get("code", False)),
-					})
-
+def scrap_melkana():
+	for i in range(100):
+		response = requests.request("POST", url + str(i), headers=headers)
+		content = response.json()
+		for home in content.get("estate_list", False):
+			if home.get("code", False):
+				if home.get("code", False) not in saved_data:
+					saved_data.append(home.get("code", False))
+					rs.append({
+						"floorArea": str(home.get("foundation", False)),
+						"sector": str(home.get("some_address", False)),
+						"url": "https://www.melkana.com/estate/" + str(home.get("code", False)),
+						})
+	return rs
 
 # Result
-for home in rs:
-    print(home)
+# for home in rs:
+#     print(home)
 
 
